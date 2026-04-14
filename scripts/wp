@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Configuración
+WALL_DIR="$HOME/wallpaper"
+CACHE_DIR="$HOME/.cache/wal"
+
+# Iniciar swww si no está corriendo
+swww query || swww-daemon &
+
+# Obtener lista de imágenes
+FLIST=$(ls "$WALL_DIR" | grep -E ".jpg$|.png$|.jpeg$|.webp$")
+
+# Mostrar Rofi con el tema personalizado
+CHOICE=$(echo -e "$FLIST" | rofi -dmenu -i -replace -config ~/.config/rofi/wallpaper-theme.rasi)
+
+if [ -n "$CHOICE" ]; then
+    FULL_PATH="$WALL_DIR/$CHOICE"
+    
+    # 1. Aplicar fondo con transición animada
+    swww img "$FULL_PATH" --transition-type center --transition-step 90
+    
+    # 2. Generar colores con Pywal
+    wal -i "$FULL_PATH" -n -q
+    
+    # 3. Recargar Waybar
+    pkill -USR2 waybar
+    
+    # 4. Actualizar terminales
+    cat "$CACHE_DIR/sequences"
+fi

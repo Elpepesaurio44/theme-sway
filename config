@@ -1,0 +1,14 @@
+# ~/.config/sway/config
+# Configuración modular. Solo actúa como orquestador.
+
+include ~/.config/sway/cfg/variables.conf
+include ~/.config/sway/cfg/appearance.conf
+include ~/.config/sway/cfg/keybindings.conf
+include ~/.config/sway/cfg/window_rules.conf
+include ~/.config/sway/cfg/outputs.conf
+include ~/.config/sway/cfg/autostart.conf
+include ~/.config/sway/cfg/bar.conf
+
+# Integraciones del sistema y personalizaciones externas
+include /etc/sway/config.d/*
+
